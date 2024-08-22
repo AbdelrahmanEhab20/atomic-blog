@@ -1,9 +1,8 @@
-import { useState, useContext } from "react";
-import { PostContext } from "../context/PostContext";
+import { useState } from "react";
+import { usePosts } from "../context/PostContext";
 
 function FormAddPost() {
   // ! access the context
-  const { onAddPost } = useContext(PostContext);
 
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -11,7 +10,7 @@ function FormAddPost() {
   const handleSubmit = function (e) {
     e.preventDefault();
     if (!body || !title) return;
-    onAddPost({ title, body });
+    usePosts.onAddPost({ title, body });
     setTitle("");
     setBody("");
   };
