@@ -4,6 +4,7 @@ import Main from "./components/Main";
 import createRandomPost from "./helpers/createRandomPost";
 import Footer from "./components/Footer";
 import Archive from "./components/Archive";
+import { PostContext } from "./context/PostContext";
 
 function App() {
   const [posts, setPosts] = useState(() =>
@@ -39,24 +40,40 @@ function App() {
   );
 
   return (
-    <section>
-      <button
-        onClick={() => setIsFakeDark((isFakeDark) => !isFakeDark)}
-        className="btn-fake-dark-mode"
-      >
-        {isFakeDark ? "☀️" : "🌙"}
-      </button>
+    // adding context provider + object of the value for state and functions
+    // 2) second step context
+    // ! 2.1 post list ---> searchedPosts ,
+    // * 2.2 adding Function ---> handleAddPost ,
+    // ? 2.3 clearing Function ---> handleClearPosts
+    // ! 2.4 Search Query ,
+    // * 2.5 Set Search Query
 
-      <Header
-        posts={searchedPosts}
-        onClearPosts={handleClearPosts}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-      />
-      <Main posts={searchedPosts} onAddPost={handleAddPost} />
-      <Archive onAddPost={handleAddPost} />
-      <Footer />
-    </section>
+    <PostContext.Provider
+      value={{
+        posts: searchedPosts,
+        onAddPost: handleAddPost,
+        onClearPosts: handleClearPosts,
+        searchQuery,
+        setSearchQuery,
+      }}
+    >
+      <section>
+        <button
+          onClick={() => setIsFakeDark((isFakeDark) => !isFakeDark)}
+          className="btn-fake-dark-mode"
+        >
+          {isFakeDark ? "☀️" : "🌙"}
+        </button>
+
+        <Header />
+
+        <Main />
+
+        <Archive />
+
+        <Footer />
+      </section>
+    </PostContext.Provider>
   );
 }
 
