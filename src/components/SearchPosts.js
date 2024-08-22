@@ -2,11 +2,12 @@ import { usePosts } from "../context/PostContext";
 
 function SearchPosts() {
   // ! access the context
+  const { searchQuery, setSearchQuery } = usePosts();
 
   return (
     <input
-      value={usePosts.searchQuery}
-      onChange={(e) => usePosts.setSearchQuery(e.target.value)}
+      value={searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
       placeholder="Search posts..."
     />
   );

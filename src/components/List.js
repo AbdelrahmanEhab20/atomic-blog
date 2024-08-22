@@ -1,9 +1,11 @@
 import { usePosts } from "../context/PostContext";
 
 function List() {
+  // ! access the context
+  const { posts } = usePosts();
   return (
     <ul>
-      {usePosts.posts.map((post, index) => (
+      {posts.map((post, index) => (
         <li key={index}>
           <h3>{post.title}</h3>
           <p>{post.body}</p>

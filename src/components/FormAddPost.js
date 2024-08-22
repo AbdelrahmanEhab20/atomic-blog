@@ -3,6 +3,7 @@ import { usePosts } from "../context/PostContext";
 
 function FormAddPost() {
   // ! access the context
+  const { onAddPost } = usePosts();
 
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -10,7 +11,7 @@ function FormAddPost() {
   const handleSubmit = function (e) {
     e.preventDefault();
     if (!body || !title) return;
-    usePosts.onAddPost({ title, body });
+    onAddPost({ title, body });
     setTitle("");
     setBody("");
   };

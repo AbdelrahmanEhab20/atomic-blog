@@ -4,6 +4,7 @@ import { usePosts } from "../context/PostContext";
 
 function Header() {
   // ! access the context
+  const { onClearPosts } = usePosts();
 
   return (
     <header>
@@ -13,7 +14,7 @@ function Header() {
       <div>
         <Results />
         <SearchPosts />
-        <button onClick={usePosts.onClearPosts}>Clear posts</button>
+        <button onClick={onClearPosts}>Clear posts</button>
       </div>
     </header>
   );
