@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 import createRandomPost from "../helpers/createRandomPost";
 
 // * ---> 1) Create Context
@@ -28,22 +28,20 @@ function PostProvider({ children }) {
   function handleClearPosts() {
     setPosts([]);
   }
+  // memoized the value to make the right rendering for what needs to be rendered only ---
+  const value = useMemo(() => {
+    return {
+      posts: searchedPosts,
+      onAddPost: handleAddPost,
+      onClearPosts: handleClearPosts,
+      searchQuery,
+      setSearchQuery,
+    };
+  }, [searchedPosts, searchQuery]);
 
   // TODO: ---> 2) passing value to the provider where we call it (App.js)
   // ✅
-  return (
-    <PostContext.Provider
-      value={{
-        posts: searchedPosts,
-        onAddPost: handleAddPost,
-        onClearPosts: handleClearPosts,
-        searchQuery,
-        setSearchQuery,
-      }}
-    >
-      {children}
-    </PostContext.Provider>
-  );
+  return <PostContext.Provider value={value}>{children}</PostContext.Provider>;
 }
 // # CUSTOM HOOK TO STOP REPEATING useContext part
 function usePosts() {
